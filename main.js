@@ -1,4 +1,4 @@
-const GRE_VOCABULARY_ENDPOINT = `https://gre.economist.com/gre-vocabulary.json`;
+const GRE_VOCABULARY_ENDPOINT = `https://gist.githubusercontent.com/nktx/aaea765bce12c6d21815b581b773c4a0/raw/b49c39093d612f775153d97144fa7c4b3f6f00ea/lln-vocabulary.json`;
 
 async function main() {
   let words;
@@ -14,7 +14,7 @@ async function main() {
     localStorage.GRE_VOCABULARY = JSON.stringify(words);
   }
 
-  let { word, pronunciation, definition, passage, partOfSpeech } = words[
+  let { word, definition, passage, partOfSpeech } = words[
     Math.floor(Math.random() * words.length)
   ];
 
@@ -41,25 +41,17 @@ async function main() {
   var hr = document.createElement("hr");
   hr.className = "vocab__hr";
 
-  //passage node
-  var vocabPassage = document.createElement("blockquote");
-  vocabPassage.className = "vocab__passage";
-  var textPassage = document.createTextNode(`${passage}`);
-  vocabPassage.appendChild(textPassage);
-
-  //definition node
-  var vocabDef = document.createElement("p");
-  vocabDef.className = "vocab__definition";
-  var textDef = document.createTextNode(`${pronunciation} [${partOfSpeech}] - ${definition}
-  `);
-  vocabDef.appendChild(textDef);
+  //description node
+  var vocabDescription = document.createElement("p");
+  vocabDescription.className = "vocab__description";
+  var textDescription = document.createTextNode(`${definition} [${partOfSpeech.toLowerCase()}] ${passage}`);
+  vocabDescription.appendChild(textDescription);
 
   //appending dom elements in parent node
   vocab.appendChild(vocabWord);
   vocab.appendChild(hr);
-  vocab.appendChild(vocabPassage);
-  vocab.appendChild(vocabDef);
-
+  vocab.appendChild(vocabDescription);
+  
   //replace oldVocab screen with new
   document.body.replaceChild(vocab, oldVocab);
 }
