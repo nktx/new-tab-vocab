@@ -1,27 +1,26 @@
-const GRE_VOCABULARY_ENDPOINT = `https://gist.githubusercontent.com/nktx/aaea765bce12c6d21815b581b773c4a0/raw/b49c39093d612f775153d97144fa7c4b3f6f00ea/lln-vocabulary.json`;
+const VOCABULARY_ENDPOINT = `https://nktx-vocab.firebaseio.com/words.json`;
 
 async function main() {
   let words;
-  if (localStorage.GRE_VOCABULARY) {
-    words = JSON.parse(localStorage.GRE_VOCABULARY);
+  let today = new Date().toLocaleDateString();
+
+  if (localStorage.NKTX_VOCABULARY && localStorage.NKTX_VOCABULARY_UPDATEDDATE && localStorage.NKTX_VOCABULARY_UPDATEDDATE === today) {
+    words = JSON.parse(localStorage.NKTX_VOCABULARY);
   } else {
-    const res = await fetch(GRE_VOCABULARY_ENDPOINT, {
+    const res = await fetch(VOCABULARY_ENDPOINT, {
       headers: { accept: "application/json" }
     });
     words = await res.json();
 
-    // Cache for later
-    localStorage.GRE_VOCABULARY = JSON.stringify(words);
+    localStorage.NKTX_VOCABULARY = JSON.stringify(words);
+    localStorage.NKTX_VOCABULARY_UPDATEDDATE = today;
   }
 
-  let { word, definition, passage, partOfSpeech } = words[
-    Math.floor(Math.random() * words.length)
-  ];
+  let keys = Object.keys(words);
+  let word = keys[keys.length * Math.random() << 0];
+  let { definition, passage, partOfSpeech } = words[word];
 
-  // Some words contain newlines for some reason
   word = word.trim();
-
-  // Remove whitespace and empasize current word
   passage = passage.trim().replace(new RegExp(`(${word}[a-z]*)`, "gi"), "$1");
 
   //old node with loading screen
