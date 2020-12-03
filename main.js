@@ -18,38 +18,45 @@ async function main() {
 
   let keys = Object.keys(words);
   let word = keys[keys.length * Math.random() << 0];
-  let { definition, passage, partOfSpeech } = words[word];
+  let { definition, sub } = words[word];
 
   word = word.trim();
-  passage = passage.trim().replace(new RegExp(`(${word}[a-z]*)`, "gi"), "$1");
+  sub = sub.trim().replace(new RegExp(`(${word}[a-z]*)`, "gi"), "$1");
 
   //old node with loading screen
-  var oldVocab = document.getElementsByClassName("vocab")[0];
+  let oldVocab = document.getElementsByClassName("vocab")[0];
 
   //new parent node vocab
-  var vocab = document.createElement("div");
+  let vocab = document.createElement("div");
   vocab.className = "vocab";
 
   //word node
-  var vocabWord = document.createElement("h1");
+  let vocabWord = document.createElement("h1");
   vocabWord.className = "vocab__word";
-  var textWord = document.createTextNode(word);
+  let textWord = document.createTextNode(word);
   vocabWord.appendChild(textWord);
 
   //hr node
-  var hr = document.createElement("hr");
+  let hr = document.createElement("hr");
   hr.className = "vocab__hr";
 
   //description node
-  var vocabDescription = document.createElement("p");
+  let vocabDescription = document.createElement("p");
   vocabDescription.className = "vocab__description";
-  var textDescription = document.createTextNode(`${definition} [${partOfSpeech.toLowerCase()}] ${passage}`);
+  let textDescription = document.createTextNode(`${definition}`);
   vocabDescription.appendChild(textDescription);
+
+  //sub node
+  let vocabSub = document.createElement("p");
+  vocabSub.className = "vocab__sub";
+  let textSub = document.createTextNode(`${sub}`);
+  vocabSub.appendChild(textSub);
 
   //appending dom elements in parent node
   vocab.appendChild(vocabWord);
   vocab.appendChild(hr);
   vocab.appendChild(vocabDescription);
+  vocab.appendChild(vocabSub);
   
   //replace oldVocab screen with new
   document.body.replaceChild(vocab, oldVocab);

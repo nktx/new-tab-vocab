@@ -24,6 +24,7 @@
       align-items: center;
       flex-direction: column;
       width: 40rem;
+      margin-top: -4rem;
     }
 
     .vocab__word {
@@ -44,14 +45,23 @@
 
     .vocab__description {
       font-size: .8rem;
-      font-weight: 300;
+      font-weight: 400;
       line-height: 1.6;
-      margin: 1rem auto;
+      margin: 1rem auto 0;
+      max-width: 30rem;
+    }
+
+    .vocab__sub {
+      font-size: .8rem;
+      font-weight: 500;
+      line-height: 1.6;
+      margin: 0 auto 1rem;
       max-width: 30rem;
     }
 
     .vocab__word::selection,
-    .vocab__description::selection {
+    .vocab__description::selection,
+    .vocab__sub::selection {
       background-color: #fff;
     }
 
